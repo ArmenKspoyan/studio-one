@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Enum\Paginate;
-use App\Http\Requests\AboutUs\GetAboutUsRequest;
 use App\Http\Requests\BlogPost\BlogPostsRequest;
 use App\Http\Requests\BlogPost\GetBlogPostsRequest;
 use App\Http\Requests\BlogPost\UpdateBlogPostsRequest;
@@ -14,7 +13,6 @@ use Exception;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
