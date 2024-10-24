@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Enum\Paginate;
+use App\Http\Requests\AboutUs\GetAboutUsRequest;
 use App\Http\Requests\BlogPost\BlogPostsRequest;
+use App\Http\Requests\BlogPost\GetBlogPostsRequest;
+use App\Http\Requests\BlogPost\UpdateBlogPostsRequest;
 use App\Http\Resources\ErrorResource;
 use App\Http\Resources\SuccessResource;
 use App\Repositories\Interface\IBlogPosts;
@@ -11,6 +14,7 @@ use Exception;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -64,6 +68,32 @@ class BlogPostsController extends Controller
         $this->blogPosts->deleteById($id);
         return SuccessResource::make([
             'message' => 'Blog Post deleted successfully!'
+        ]);
+    }
+
+    public function getById(GetBlogPostsRequest $request): SuccessResource
+    {
+        $data = $request->validated();
+        return SuccessResource::make([
+            'message' => 'Blog Post gedit successfully!',
+            'data' => $this->blogPosts->getById($data['id']),
+        ]);
+
+    }
+
+    public function update(UpdateBlogPostsRequest $request): SuccessResource|ErrorResource
+    {
+        $data = $request->validated();
+        $success = $this->blogPosts->updateById($data['id'], ['title' => $data['title'], 'content' => $data['content']]);
+
+        if (!$success) {
+            return ErrorResource::make([
+                'message' => 'Something went wrong!'
+            ]);
+        }
+
+        return SuccessResource::make([
+            'message' => 'Blog post updated successfully.',
         ]);
     }
 
