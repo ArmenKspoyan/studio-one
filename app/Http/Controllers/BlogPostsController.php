@@ -32,6 +32,11 @@ class BlogPostsController extends Controller
         return view('blog-posts', ['blogPosts' => $blogPosts]);
     }
 
+    public function create(): Factory|View|Application
+    {
+        return view('store-blog-post');
+    }
+
     public function store(BlogPostsRequest $request): RedirectResponse
     {
         $data = $request->validated();
