@@ -25,6 +25,7 @@ Route::middleware('auth')->group(function () {
     Route::controller(BlogPostsController::class)->group(function () {
         Route::get('/blog-posts', 'index')->name('blog-posts');
         Route::post('/add-blog-post', 'store')->name('store.blog-post');
+        Route::delete('/delete-blog-post/{id}', 'destroy');
 
     });
 });

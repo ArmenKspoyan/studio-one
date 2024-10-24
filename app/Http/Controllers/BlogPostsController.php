@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Enum\Paginate;
 use App\Http\Requests\BlogPost\BlogPostsRequest;
+use App\Http\Resources\ErrorResource;
+use App\Http\Resources\SuccessResource;
 use App\Repositories\Interface\IBlogPosts;
+use Exception;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
@@ -40,6 +43,23 @@ class BlogPostsController extends Controller
 
 
         return Redirect::to('/blog-posts');
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function destroy(Request $request, int $id): SuccessResource|ErrorResource
+    {
+        $blogPost = $this->blogPosts->getById($id);
+        if ($request->user()->cannot('delete', $blogPost)) {
+            return ErrorResource::make([
+                'message' => 'You dont have a permission to perform this action!'
+            ]);
+        }
+        $this->blogPosts->deleteById($id);
+        return SuccessResource::make([
+            'message' => 'Blog Post deleted successfully!'
+        ]);
     }
 
 }
