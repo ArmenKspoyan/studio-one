@@ -29,6 +29,7 @@ Route::middleware('auth')->group(function () {
         Route::delete('/delete-blog-post/{id}', 'destroy');
         Route::get('/get-blog-post', 'getById');
         Route::post('/update-blog-post', 'update');
+        Route::get('/show-blog-post', 'showBlogPost')->name('show-blog-post');
 
     });
 });

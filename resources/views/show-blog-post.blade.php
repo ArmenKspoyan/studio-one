@@ -1,76 +1,31 @@
 <x-app-layout>
-    <x-edit-modal id="edit-modal" title="Edit">
-    </x-edit-modal>
+
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
             <div class="p-12 sm:p-12 bg-white shadow sm:rounded-lg">
                 <div>
                     <section>
-                        <x-primary-button class="add-blog-post">{{ __('Create New Posts') }}</x-primary-button>
-                        <br/>
-                        <br/>
                         <header>
                             <h1 class="text-lg font-medium text-center text-gray-900">
                                 {{ __("Blog Post Lists") }}
                             </h1>
                         </header>
-                        <div class="mb-4">
-                            <form action="{{ route('blog-posts') }}" method="GET">
-                                <input type="text" name="search" class="form-control search-blog"
-                                       placeholder="Search Blog Posts" value="{{ request('search') }}">
-                                <button type="submit" class="btn btn-primary mt-2 search-blog-post">Search</button>
-                            </form>
-                        </div>
                         <table class="table blog-post">
                             <thead>
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">Title</th>
                                 <th scope="col">Content</th>
-                                <th scope="col">User Name</th>
-                                <th scope="col">See more</th>
-                                <th scope="col">Edit</th>
-                                <th scope="col">Delete</th>
                             </tr>
                             </thead>
                             <tbody>
-
-                            @foreach($blogPosts as $blogPost)
                                 <tr>
                                     <th scope="row">{{$blogPost->id}}</th>
-                                    <td>{{$blogPost->title}}</td>
                                     <td>{{$blogPost->content}}</td>
-                                    <td>{{$blogPost->user->name}}</td>
-                                    <td>
-                                        <button class="btn btn-success show-blog-post"
-                                                blog-post-id="{{ $blogPost->id }}">See more
-                                        </button>
-                                    </td>
-                                    <td>
-                                        <button data-bs-toggle="modal"
-                                                data-bs-target="#edit-modal" class="btn btn-success edit-blog-post"
-                                                blog-post-id="{{ $blogPost->id }}"
-                                                @cannot('update', $blogPost) disabled
-                                            @endcannot
-                                        >Edit
-                                        </button>
-                                    </td>
-                                    <td>
-                                        <button type="button" blog-post-id="{{ $blogPost->id }}"
-                                                class="btn btn-danger delete-button"
-                                                @cannot('delete', $blogPost) disabled
-                                            @endcannot>
-                                            Delete
-                                        </button>
-                                    </td>
                                 </tr>
-                            @endforeach
                             </tbody>
                         </table>
-                        <div class="d-flex justify-content-center">
-                            {!! $blogPosts->links('pagination::bootstrap-4') !!}
-                        </div>
+
                     </section>
                 </div>
             </div>
@@ -96,7 +51,8 @@
 
                 const result = await response.json();
                 if(result.success){
-                    window.location.href = `{{ route('show-blog-post') }}?id=${id}`
+                    console.log(result,222);
+                    window.location.href = '/dashboard';
 
                 }
 

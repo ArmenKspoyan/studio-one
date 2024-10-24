@@ -8,6 +8,7 @@ use App\Http\Requests\BlogPost\GetBlogPostsRequest;
 use App\Http\Requests\BlogPost\UpdateBlogPostsRequest;
 use App\Http\Resources\ErrorResource;
 use App\Http\Resources\SuccessResource;
+use App\Models\BlogPost;
 use App\Repositories\Interface\IBlogPosts;
 use Exception;
 use Illuminate\Contracts\View\Factory;
@@ -98,6 +99,16 @@ class BlogPostsController extends Controller
         return SuccessResource::make([
             'message' => 'Blog post updated successfully.',
         ]);
+    }
+
+    public function showBlogPost(Request $request): View|Factory|Application
+    {
+        $id = $request->query('id');
+        $blogPost = $this->blogPosts
+            ->with(['user', 'comments.user'])
+            ->getById($id);
+
+        return view('show-blog-post', compact('blogPost'));
     }
 
 }
