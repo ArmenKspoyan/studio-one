@@ -28,10 +28,15 @@ class BlogPostsController extends Controller
     {
     }
 
-    public function index(): View|Factory|Application
+    public function index(Request $request): View|Factory|Application
     {
-        $blogPosts = $this->blogPosts->with('user')->paginate(Paginate::PAGE_LIMIT->value);
-        return view('blog-posts', ['blogPosts' => $blogPosts]);
+        $search = $request->input('search');
+        $blogPosts = $this->blogPosts
+            ->with('user')
+            ->searchBlogPosts($search)
+            ->paginate(Paginate::PAGE_LIMIT->value);
+
+        return view('blog-posts', ['blogPosts' => $blogPosts, 'search' => $search]);
     }
 
     public function create(): Factory|View|Application

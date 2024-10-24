@@ -11,18 +11,24 @@
                         <br/>
                         <br/>
                         <header>
-                            <h2 class="text-lg font-medium text-gray-900">
+                            <h1 class="text-lg font-medium text-center text-gray-900">
                                 {{ __("Blog Post Lists") }}
-                            </h2>
+                            </h1>
                         </header>
-
+                        <div class="mb-4">
+                            <form action="{{ route('blog-posts') }}" method="GET">
+                                <input type="text" name="search" class="form-control search-blog"
+                                       placeholder="Search Blog Posts" value="{{ request('search') }}">
+                                <button type="submit" class="btn btn-primary mt-2 search-blog-post">Search</button>
+                            </form>
+                        </div>
                         <table class="table blog-post">
                             <thead>
                             <tr>
                                 <th scope="col">#</th>
                                 <th scope="col">Title</th>
                                 <th scope="col">Content</th>
-                                <th scope="col">Created User Name</th>
+                                <th scope="col">User Name</th>
                                 <th scope="col">Edit</th>
                                 <th scope="col">Delete</th>
                             </tr>
@@ -122,7 +128,7 @@
                     'Content-Type': 'application/json',
                     'X-CSRF-TOKEN': '{{ csrf_token() }}',
                 },
-                body: JSON.stringify({ id, content, title }),
+                body: JSON.stringify({id, content, title}),
             }).then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok: ' + response.statusText);
@@ -161,7 +167,6 @@
                 });
         });
     });
-
 
 
     document.addEventListener('click', async function (event) {

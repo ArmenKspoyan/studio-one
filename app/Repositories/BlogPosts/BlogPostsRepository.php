@@ -19,4 +19,14 @@ class BlogPostsRepository extends BaseRepository implements IBlogPosts
     {
         return BlogPost::class;
     }
+
+    public function searchBlogPosts($search)
+    {
+        return $this->model->with('user')
+            ->when($search, function ($query, $search) {
+                $query->where('title', $search)
+                    ->orWhere('content', $search);
+            });
+    }
+
 }
