@@ -24,7 +24,9 @@ Route::middleware('auth')->group(function () {
 
     Route::controller(BlogPostsController::class)->group(function () {
         Route::get('/blog-posts', 'index')->name('blog-posts');
+        Route::post('/add-blog-post', 'store')->name('store.blog-post');
+
     });
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
